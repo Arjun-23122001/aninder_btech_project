@@ -35,14 +35,15 @@ import sys
 from pathlib import Path
 import torch
 from twilio.rest import Client
-from datetime import datetime
+from datetime import datetime,timedelta
 import sqlite3 as sql
 from geopy import distance
 
-client=Client("AC9b2ab3903a17b052786dd37f252850ce","dc490dbeb4bb05a54475f95eb6ddabda")
-con=sql.connect('/content/gdrive/MyDrive/project/db.sqlite3')
+client=Client("AC9b2ab3903a17b052786dd37f252850ce","19d31e859aab75db7846710f137a4425")
+con=sql.connect('/content/drive/MyDrive/project/db.sqlite3')
 wdb=con.cursor()
 wconn = wdb.connection
+cooldown_period = timedelta(minutes=10)
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
 if str(ROOT) not in sys.path:
@@ -117,7 +118,6 @@ def run(
     else:
         dataset = LoadImages(source, img_size=imgsz, stride=stride, auto=pt, vid_stride=vid_stride)
     vid_path, vid_writer = [None] * bs, [None] * bs
-    video_name = os.path.splitext(os.path.basename(vid_path))[0]
     # Run inference
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
@@ -167,9 +167,10 @@ def run(
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
                     class_name = names[int(c)]
                     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    wdb.execute('''INSERT INTO app1_camera (Video,Animal,DateTime) VALUES (?,?,?)''',(video_name,class_name,str(timestamp)))   
+                    Video="Lakkidi"
+                    wdb.execute('''INSERT INTO app1_camera (Video,Animal,DateTime) VALUES (?,?,?)''',(Video,class_name,str(timestamp)))   
                     wconn.commit()
-                    wdb.execute('select Latitude,Longitude from app1_add_camera_location where app1_camera.video=app1_add_camera_location.video')
+                    wdb.execute("select Latitude,Longitude from app1_add_camera_location")
                     lat1, lon1 = wdb.fetchone()
                     wdb.execute("select Latitude,Longitude from app1_login")
                     locations =wdb.fetchall()
@@ -179,8 +180,16 @@ def run(
                          if dist < 20:
                             wdb.execute('SELECT Mobile_Number FROM app1_login WHERE Latitude=? AND Longitude=?', (loc[0], loc[1]))
                             phone = [row[0] for row in wdb.fetchall()]
-                            message = f"{label} is detected at your location on {timestamp}"
+                            message = f"{class_name} is detected at your location on {timestamp}"
+                            cooldown_period = timedelta(minutes=10)
+                            last_sent_messages = {}
                             for number in phone:
+                              if number in last_sent_messages:
+                                last_sent_time = last_sent_messages[phone]
+                                cooldown_time = last_sent_time + cooldown_period
+                                if datetime.now() < cooldown_time:
+                                   print(f"Cooldown period active for {phone}. Skipping message.")
+                                   break
                               client.messages.create(
                                   body=message,
                                   from_='+16205071387',
