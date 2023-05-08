@@ -32,11 +32,11 @@ def HomePage(request):
                user.Latitude=Latitude
                user.Longitude=Longitude
                user.save()
-               return redirect('user_home')
+               return user_home(request)
            except login.DoesNotExist:
                 Login=login.objects.create(Mobile_Number = Mobile_Number,Latitude=Latitude,Longitude=Longitude)
                 Login.save()
-                return redirect('user_home')
+                return user_home(request)
         else:
            i=1
            context = {'data': i}
@@ -52,7 +52,7 @@ def SignupPage(request):
         Email=request.POST['Email']
         forest=forest_department_login.objects.create(Name=Name,Division=Division,Designation=Designation,Email=Email)
         forest.save()
-        return redirect('forest_home')
+        return forest_home(request)
     return render (request,'forest_department_login.html')
 
 @csrf_exempt
@@ -124,6 +124,7 @@ def user_map(request):
     labels = camera.objects.all()
     context = {'labels': labels}
     return render(request, 'user_map.html',context)
+
 def forest_map(request):
     labels = camera.objects.all()
     context = {'labels': labels}
