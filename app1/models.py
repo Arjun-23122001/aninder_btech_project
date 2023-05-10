@@ -6,31 +6,25 @@ class login(models.Model):
     Latitude=models.FloatField()
     Longitude=models.FloatField()
 class forest_department_login(models.Model):
-    Name = models.TextField()
-    Division = models.TextField()
-    Designation = models.TextField()
+    Name = models.TextField(max_length=30)
+    Division = models.TextField(max_length=30)
+    Designation = models.TextField(max_length=30)
     Email = models.EmailField()
 class camera(models.Model):
-    CAM_ID = models.TextField()
-    Animal=models.TextField()
-    Datetime=models.TextField()
+    CAM_ID = models.TextField(max_length=15)
+    Animal=models.TextField(max_length=30)
+    Datetime=models.TextField(max_length=30)
 class suggestions(models.Model):
-    Name=models.TextField()
-    Designation=models.TextField()
-    Email=models.TextField()
-    suggestions=models.TextField()
+    Name=models.TextField(max_length=30)
+    Designation=models.TextField(max_length=30)
+    Email=models.TextField(max_length=30)
+    suggestions=models.TextField(max_length=500)
 class report_intrusion(models.Model):
-    Animal=models.TextField()
-    Location=models.TextField()
-    Date_and_Time=models.TextField()
-class add_camera_Location(models.Model):
-      CAM_ID=models.TextField()
-      Location=models.TextField()
+    Animal=models.TextField(max_length=30)
+    Location=models.TextField(max_length=30)
+    Date_and_Time=models.TextField(max_length=30)
+class add_camera_location(models.Model):
+      CAM_ID=models.TextField(max_length=15)
+      Location=models.TextField(max_length=30)
       latitude=models.FloatField()
       longitude=models.FloatField()
-class PushNotification(models.Model):
-    Animal = models.CharField(max_length=15)
-    datetime = models.DateTimeField()
-      
-
-
