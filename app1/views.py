@@ -1,24 +1,19 @@
-from itertools import zip_longest
 import json
-from django.shortcuts import render,HttpResponse,redirect
+from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.decorators import login_required
-from .models import login,forest_department_login,camera,add_camera_Location,suggestions,report_intrusion
+from .models import login,forest_department_login,camera,add_camera_location,suggestions,report_intrusion
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import re
-import sqlite3 as sql
-from geopy import distance,Nominatim
 from django.http import JsonResponse
-from fcm_django.models import FCMDevice
 
 @csrf_exempt
 def HomePage(request):
-    if request.method=='POST': 
+    if request.method=='POST':
         Mobile_Number=request.POST['Mobile_Number']
         Latitude=request.POST['lat']
         Longitude=request.POST['lng']
@@ -46,7 +41,7 @@ def HomePage(request):
            i=1
            context = {'data': i}
            return render(request, 'login.html',context)
-    return render (request,'login.html') 
+    return render (request,'login.html')
 
 @csrf_exempt
 def SignupPage(request):
@@ -122,14 +117,14 @@ def forest_home(request):
 
 @csrf_exempt
 def report(request):
-    return render(request,'report.html')   
+    return render(request,'report.html')
 
-@csrf_exempt        
+@csrf_exempt
 def get_markers(request):
-    camera_locations = camera.objects.filter(CAM_ID__in=add_camera_Location.objects.values_list('CAM_ID', flat=True))
+    camera_locations = camera.objects.filter(CAM_ID__in=add_camera_location.objects.values_list('CAM_ID', flat=True))
     markers = []
     for location in camera_locations:
-        camera_location = add_camera_Location.objects.get(CAM_ID=location.CAM_ID)
+        camera_location = add_camera_location.objects.get(CAM_ID=location.CAM_ID)
         marker = {
             "Location":camera_location.Location,
             "latitude": camera_location.latitude,
@@ -142,7 +137,7 @@ def get_markers(request):
         markers_json = json.dumps(markers)
         return render(request, 'user_map.html', {'markers': markers_json})
     return render(request, 'user_map.html')
-    
+
 @csrf_exempt
 def forest_map(request):
     labels = camera.objects.all()
@@ -156,7 +151,7 @@ def addcameraLocation(request):
        Location=request.POST['Location']
        latitude = request.POST['latitude']
        longitude = request.POST['longitude']
-       cameraLocation=add_camera_Location.objects.create(CAM_ID=CAM_ID,Location=Location,latitude=latitude,longitude=longitude)
+       cameraLocation=add_camera_location.objects.create(CAM_ID=CAM_ID,Location=Location,latitude=latitude,longitude=longitude)
        cameraLocation.save()
        return render(request, 'addcameraLocation.html')
     return render(request, 'addcameraLocation.html')
@@ -172,18 +167,5 @@ def suggestions(request):
         suggest.save()
         return render(request,'suggest.html')
     return render(request,'suggest.html')
-@csrf_exempt
-def send_push_notification(request):
-    notifications =camera.objects.values('Animal')
-    for notification in notifications:
-        Animal = notification['Animal']
-        location = add_camera_Location.location.get(CAM_ID=camera.CAM_ID)
-        devices = FCMDevice.objects.all()
-        Datetime=notification['Datetime']
-        devices.send_message(
-            title='New Notification from ANINDER',
-            body=f'A new {Animal} has been identified at {location} on {Datetime}.',
-            click_action='user_map'
-        )
-       
+
 
