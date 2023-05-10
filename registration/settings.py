@@ -102,6 +102,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+FCM_DJANGO_SETTINGS = {
+    "FCM_SERVER_KEY": "AAAAM9np7KI:APA91bFSUWGgU_VjIHtD_c-GSDIWsD6rdEHLxlE1xfay1C4YD-dUYudc5PngRPNGERV1ws5MFmAt2AnbwR3cDW76AdZ2KkiHES0Zid0ncUL5GBG3tiDFts7vmHmJMSABKz91g6lLJj1Z",
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
