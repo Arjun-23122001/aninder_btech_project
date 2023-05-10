@@ -79,9 +79,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
   opacity: 1;
 }
 .location-map{
-            width:83%; 
-            height:90vh; 
-            position: bottom; 
+            width:83%;
+            height:90vh;
+            position: bottom;
             outline:black;
         }
 
@@ -120,8 +120,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
     {% csrf_token %}
     <h1>Kerala animal intrusion map</h1>
 
-<label for="name"><b>Camera_ID</b></label>
-    <input id='name' type="text" placeholder="Name of the place" name="name" required>
+    <label for="name"><b>Camera_ID</b></label>
+    <input id='name' type="text" placeholder="Camera ID" name="name" required>
+     <label for="Location"><b>Location</b></label>
+    <input id='Location' type="text" placeholder="Location" name="Location" required>
 
     <label for="latitude"><b>Latitude</b></label>
     <input id='ipid1' type="float" placeholder="latitude" name="latitude" required>
@@ -148,8 +150,8 @@ var map = L.map('map').setView([11,79], 7);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
-  var marker = null;    
-    
+  var marker = null;
+
 
     map.on('click', function(e) {
       if (marker) {
@@ -163,7 +165,7 @@ var map = L.map('map').setView([11,79], 7);
     var l2=parseFloat(e.latlng['lng']);
     document.getElementById("ipid1").value=l1;
     document.getElementById("ipid2").value=l2;
-}); 
+});
   function openForm() {
   document.getElementById("myForm").style.display = "block";
 }
