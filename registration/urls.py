@@ -19,7 +19,7 @@ from app1 import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('admin/addcameraLocation/',views.addcameraLocation, name='addcameraLocation'),
+    path('addcameraLocation/',views.addcameraLocation, name='addcameraLocation'),
     path('',views.HomePage,name='login'),
     path('forest_department_login/',views.SignupPage,name='forest_department_login'),
     path('user_home/',views.user_home, name = 'user_home'),
@@ -28,5 +28,4 @@ urlpatterns = [
     path('get-markers/',views.forest_map,name='forest_map'),
     path('report/',views.report,name='report'),
     path('suggest/',views.suggestions,name='suggest'),
-    path('check/',views.check,name='user_check')
     ]
