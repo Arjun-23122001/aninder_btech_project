@@ -121,10 +121,10 @@ def report(request):
         Animal=request.POST['Animal']
         Location=request.POST['Location']
         Date=request.POST['Date_time']
-        suggest=report.objects.create(Animal=Animal,Designation=Designation,Email=Email,suggestions=suggestion)
+        suggest=report_intrusion.objects.create(Animal=Animal,Location=Location,Date_and_Time=Date)
         suggest.save()
-        return render(request,'suggest.html')
-    return render(request,'suggest.html')
+        return render(request,'report.html')
+    return render(request,'report.html')
 
 
     return render(request,'report.html')
