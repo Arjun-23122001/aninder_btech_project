@@ -1,0 +1,14 @@
+names:
+- ELEPHANT
+- TIGER
+- WILD BOAR
+nc: 3
+roboflow:
+  license: CC BY 4.0
+  project: aninder-5fm7p
+  url: https://universe.roboflow.com/aninder-8og4a/aninder-5fm7p/dataset/5
+  version: 5
+  workspace: aninder-8og4a
+test: ../test/images
+train: ANINDER-5/train/images
+val: ANINDER-5/valid/images
