@@ -6,3 +6,15 @@ from django.shortcuts import redirect
 from django.template import loader
 from django.urls import reverse
 # Register your models here.
+
+class CustomAdminSite(AdminSite):
+    def index(self, request, extra_context=None):
+        if request.user.is_authenticated:
+            return redirect('/admin/admin_home/')
+        else:
+            return super().index(request, extra_context)
+admin_site = CustomAdminSite(name='custom_admin')
+admin.site = admin_site 
+admin.autodiscover()
+def __str__(self):
+        return self.name

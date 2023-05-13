@@ -28,3 +28,5 @@ class add_camera_location(models.Model):
       Location=models.TextField(max_length=30)
       latitude=models.FloatField()
       longitude=models.FloatField()
+
+

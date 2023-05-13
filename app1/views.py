@@ -117,14 +117,7 @@ def forest_home(request):
 
 @csrf_exempt
 def report(request):
-     if request.method == ['POST']:
-        Animal=request.POST['Animal']
-        Location=request.POST['Location']
-        Date=request.POST['Date_time']
-        suggest=report_intrusion.objects.create(Animal=Animal,Location=Location,Date_and_Time=Date)
-        suggest.save()
-        return render(request,'report.html')
-     return render(request,'report.html')
+    return render(request,'report.html')
 
 @csrf_exempt
 def get_markers(request):
@@ -162,6 +155,10 @@ def addcameraLocation(request):
        cameraLocation.save()
        return render(request, 'addcameraLocation.html')
     return render(request, 'addcameraLocation.html')
+
+@csrf_exempt
+def admin_home(request):
+    return render (request,'Admin_home.html')
 
 @csrf_exempt
 def suggestions(request):
