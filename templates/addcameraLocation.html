@@ -3,8 +3,7 @@
 <head>
 <title>Add location</title>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Get the leaflet CSS file -->
 
 <style>
@@ -33,6 +32,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   right: 15px;
   border: 3px solid #f1f1f1;
   z-index: 9;
+  max-width: 400px; /* Add this line to set a maximum width for the form */
 }
 
 /* Add styles to the form container */
@@ -121,7 +121,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     <h1>Kerala animal intrusion map</h1>
 
     <label for="name"><b>Camera_ID</b></label>
-    <input id='name' type="text" placeholder="Camera ID" name="name" required>
+    <input id='name' type="text" placeholder="Camera_ID" name="name" required>
      <label for="Location"><b>Location</b></label>
     <input id='Location' type="text" placeholder="Location" name="Location" required>
 

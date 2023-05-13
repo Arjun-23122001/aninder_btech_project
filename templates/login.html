@@ -22,7 +22,7 @@
     integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
     crossorigin=""></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <link rel= "stylesheet" type="text/css" href="{% static 'css/style3.css' %}"/>
+    <link rel= "stylesheet" type="text/css" href="{% static 'css/style0.css' %}"/>
 </head>
 <body>
     <div class="background">
@@ -34,6 +34,7 @@
         <label for="Mobile Number">Mobile Number</label>
         <input type="text" placeholder="Mobile number(with country code)" id="Mobile_Number" name="Mobile_Number" required>
         <label for="location">Select Location from map</label>
+        <input type="search" placeholder="search Location with place and district" id="location" name="location">
 				<div id="map" class="location-map"></div>
 				<input type="hidden" id="lat" name="lat" required>
 				<input type="hidden" id="lng" name="lng" required>
@@ -53,6 +54,39 @@
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
+  $('#location').on('input', function() {
+      var location = $(this).val();
+      searchLocation(location);
+    });
+
+    function searchLocation(location) {
+      if (location === '') {
+        resetMap();
+        return;
+      }
+      var apiUrl = 'https://nominatim.openstreetmap.org/search?format=json&q=' + location;
+
+      $.ajax({
+        url: apiUrl,
+        dataType: 'json',
+        success: function(data) {
+          if (data.length > 0) {
+            var lat = parseFloat(data[0].lat);
+            var lon = parseFloat(data[0].lon);
+            updateMap(lat, lon);
+          } 
+        },
+        
+      });
+    }
+
+    function updateMap(lat, lon) {
+      map.setView([lat, lon], 13);
+    }
+
+    function resetMap() {
+      map.setView([10.2718,76.0130], 6.5);
+    }
 
   var marker = null;
 
