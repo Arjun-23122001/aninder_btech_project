@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
             name='camera',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('CAM_ID', models.TextField()),
+                ('CAMRA_ID', models.TextField()),
                 ('Latitude', models.FloatField()),
                 ('Longitude', models.FloatField()),
                 ('Location', models.TextField()),
