@@ -150,6 +150,10 @@ var map = L.map('map').setView([11,79], 7);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
+  {% for location in locations %}
+    var marker = L.marker([{{ location.latitude }}, {{ location.longitude }}]).addTo(map);
+    marker.bindPopup("<b>{{ location.name }}</b><br>{{ location.location }}");
+    {% endfor %}
   var marker = null;
 
 
