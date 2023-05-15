@@ -161,8 +161,11 @@ def addcameraLocation(request):
        longitude = request.POST['longitude']
        cameraLocation=add_camera_location.objects.create(CAM_ID=CAM_ID,Location=Location,latitude=latitude,longitude=longitude)
        cameraLocation.save()
-       return render(request, 'addcameraLocation.html', {'locations': locations})
-    return render(request, 'addcameraLocation.html', {'locations': locations})
+        if locations:
+           return render(request, 'addcameraLocation.html', {'locations': locations})
+        else:
+           return render(request, 'addcameraLocation.html')
+    return render(request, 'addcameraLocation.html')
 
 @csrf_exempt
 def admin_home(request):
