@@ -153,6 +153,7 @@ def forest_map(request):
 
 @csrf_exempt
 def addcameraLocation(request):
+    locations =add_camera_location.objects.all()
     if request.method == 'POST':
        CAM_ID=request.POST['name']
        Location=request.POST['Location']
@@ -160,8 +161,8 @@ def addcameraLocation(request):
        longitude = request.POST['longitude']
        cameraLocation=add_camera_location.objects.create(CAM_ID=CAM_ID,Location=Location,latitude=latitude,longitude=longitude)
        cameraLocation.save()
-       return render(request, 'addcameraLocation.html')
-    return render(request, 'addcameraLocation.html')
+       return render(request, 'addcameraLocation.html', {'locations': locations})
+    return render(request, 'addcameraLocation.html', {'locations': locations})
 
 @csrf_exempt
 def admin_home(request):
