@@ -117,6 +117,17 @@ def forest_home(request):
 
 @csrf_exempt
 def report(request):
+    if request.method == ['POST']:
+        Animal=request.POST['Animal']
+        Location=request.POST['Location']
+        Date=request.POST['Date']
+        report=report.objects.create(Animal=Animal,Location=Location,Date=Date)
+        report.save()
+        return render(request,'report.html')
+    return render(request,'report.html')
+
+
+    
     return render(request,'report.html')
 
 @csrf_exempt
