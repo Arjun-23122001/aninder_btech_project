@@ -20,7 +20,7 @@ from app1 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('addcameraLocation/',views.addcameraLocation, name='addcameraLocation'),
-    path('admin/admin_home/',views.admin_home, name='admin_home'),
+    path('admin_home/',views.admin_home, name='admin_home'),
     path('',views.HomePage,name='login'),
     path('forest_department_login/',views.SignupPage,name='forest_department_login'),
     path('user_home/',views.user_home, name = 'user_home'),
