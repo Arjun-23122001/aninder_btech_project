@@ -121,13 +121,9 @@ def report(request):
         Animal=request.POST['Animal']
         Location=request.POST['Location']
         Date=request.POST['Date']
-        report=report.objects.create(Animal=Animal,Location=Location,Date=Date)
+        report=report.objects.create(Animal=Animal,Location=Location,Date_and_Time=Date)
         report.save()
         return render(request,'report.html')
-    return render(request,'report.html')
-
-
-    
     return render(request,'report.html')
 
 @csrf_exempt
