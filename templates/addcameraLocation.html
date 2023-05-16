@@ -84,7 +84,13 @@ body {font-family: Arial, Helvetica, sans-serif;}
             position: bottom;
             outline:black;
         }
-
+  input{
+    width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  }
 </style>
 
   <!-- Load Leaflet from CDN -->
@@ -175,6 +181,39 @@ var map = L.map('map').setView([11,79], 7);
   function openForm() {
   document.getElementById("myForm").style.display = "block";
 }
+     $('#Loc').on('input', function() {
+      var location = $(this).val();
+      searchLocation(location);
+    });
+
+    function searchLocation(location) {
+      if (location === '') {
+        resetMap();
+        return;
+      }
+      var apiUrl = 'https://nominatim.openstreetmap.org/search?format=json&q=' + location;
+
+      $.ajax({
+        url: apiUrl,
+        dataType: 'json',
+        success: function(data) {
+          if (data.length > 0) {
+            var lat = parseFloat(data[0].lat);
+            var lon = parseFloat(data[0].lon);
+            updateMap(lat, lon);
+          } 
+        },
+        
+      });
+    }
+
+    function updateMap(lat, lon) {
+      map.setView([lat, lon], 13);
+    }
+
+    function resetMap() {
+      map.setView([10.2718,76.0130], 6.5);
+    }
 
 </script>
 </body>
