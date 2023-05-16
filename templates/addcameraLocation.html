@@ -113,14 +113,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
   <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
     integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
     crossorigin=""></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
 </head>
 <body>
 <h1>Add Camera Location</h1>
-<input id='Loc' type="search" placeholder="Location" name="Loc">
+ <input type="search" placeholder="search Location" id="location" name="location">
 <div class="form-popup" id="myForm">
   <form  method="POST" class="form-container">
     {% csrf_token %}
@@ -181,7 +181,7 @@ var map = L.map('map').setView([11,79], 7);
   function openForm() {
   document.getElementById("myForm").style.display = "block";
 }
-     $('#Loc').on('input', function() {
+     $('#location').on('input', function() {
       var location = $(this).val();
       searchLocation(location);
     });
